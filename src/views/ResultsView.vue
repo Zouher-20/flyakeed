@@ -7,6 +7,43 @@ const store = useAmadeus();
 onMounted(() => {
     // 
     store.getLocations('ter')
+    store.getResults({
+                "currencyCode": "USD",
+                "originDestinations": [
+                  {
+                    "id": "1",
+                    "originLocationCode": "NYC",
+                    "destinationLocationCode": "MAD",
+                    "departureDateTimeRange": {
+                      "date": "2023-11-01",
+                      "time": "10:00:00"
+                    }
+                  }
+                ],
+                "travelers": [
+                  {
+                    "id": "1",
+                    "travelerType": "ADULT"
+                  }
+                ],
+                "sources": [
+                  "GDS"
+                ],
+                "searchCriteria": {
+                  "maxFlightOffers": 2,
+                  "flightFilters": {
+                    "cabinRestrictions": [
+                      {
+                        "cabin": "BUSINESS",
+                        "coverage": "MOST_SEGMENTS",
+                        "originDestinationIds": [
+                          "1"
+                        ]
+                      }
+                    ]
+                  }
+                }
+              })
 });
 </script>
 

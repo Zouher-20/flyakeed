@@ -8,7 +8,8 @@ function _url(ep) {
 
 export const useAmadeus = defineStore("amadeus", () => {
     async function generateToken() {
-        fetch(_url("/v1/security/oauth2/token"), {
+        var token;
+        await fetch(_url("/v1/security/oauth2/token"), {
             method: "POST",
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded",
@@ -17,21 +18,14 @@ export const useAmadeus = defineStore("amadeus", () => {
         })
             .then((res) => res.json())
             .then((res) => {
-                localStorage.setItem('token', res.access_token)
+                token = res.access_token
             });
-    }
 
-    async function getToken() {
-        var token = localStorage.getItem("token");
-        if (!token) {
-            await generateToken();
-        }
-
-        return localStorage.getItem('token')
+        return token;
     }
 
     async function getLocations(keyword) {
-        const token = await getToken().then((t) => t);
+        const token = await generateToken().then((t) => t);
         var result = []
         await fetch(_url(`/v1/reference-data/locations?keyword=${keyword}&subType=CITY,AIRPORT`), {
             method: "GET",
@@ -46,15 +40,19 @@ export const useAmadeus = defineStore("amadeus", () => {
         return result;
     }
 
+    // check out https://developers.amadeus.com/self-service/category/flights/api-doc/flight-offers-search/api-reference
+
     async function getResults(params) {
-        const token = await getToken().then((t) => t);
+        const token = await generateToken().then((t) => t);
         var result = []
         await fetch(_url(`/shopping/flight-offers`), {
-            method: "GET",
+            method: "POST",
             headers: {
                 "Authorization": `Bearer ${token}`,
-                "Content-Type": "application/x-www-form-urlencoded",
+                "Content-Type": "application/vnd.amadeus+json",
+                "X-HTTP-Method-Override": "GET"
             },
+            body: JSON.stringify(params)
         })
             .then((res) => res.json())
             .then((res) => {
@@ -63,5 +61,5 @@ export const useAmadeus = defineStore("amadeus", () => {
         return result;
     }
 
-    return { getToken, getLocations };
+    return { getLocations, getResults };
 });
