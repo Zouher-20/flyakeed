@@ -25,7 +25,7 @@
         </svg>
       </span>
       <span           style="font-size: 1em"
- class="text-white ">english</span>
+ class="text-white pt-1">english</span>
     </div>
     <span           style="font-size: 1em"
  class="text-white flag-lang">العربية</span>
