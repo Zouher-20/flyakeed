@@ -418,12 +418,307 @@
               </svg>
               إلى</span
             ><input
-            
+            v-model="keywordTo"
               type="text"
               class="color-primary-dark btn bg-gray-soft h-input to p-1 px-3 pt-3 w-100 fs-3"
               placeholder="المدينة أو المطار"
               value=""
             />
+             <div
+              v-if="keywordTo != ''"
+              class="z-index-103 bg-white p-absolute w-100 py-2 c-pointer user-select-none shadow ofy-scroll"
+              style="height: 50vh; min-width: 280px; overflow-y: auto"
+            >
+              <div>
+                <!-- Loader -->
+                <div v-if="isLoadingTo" class="loader">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                    width="50px"
+                    height="50px"
+                    viewBox="0 0 100 100"
+                    preserveAspectRatio="xMidYMid"
+                    style="
+                      margin: 2em auto;
+                      background: none;
+                      display: block;
+                      shape-rendering: auto;
+                    "
+                  >
+                    <g transform="rotate(0 50 50)">
+                      <rect
+                        x="47"
+                        y="13.5"
+                        rx="3"
+                        ry="8.5"
+                        width="6"
+                        height="17"
+                        fill="#ff56a1"
+                      >
+                        <animate
+                          attributeName="opacity"
+                          values="1;0"
+                          keyTimes="0;1"
+                          dur="1.3513513513513513s"
+                          begin="-1.238738738738739s"
+                          repeatCount="indefinite"
+                        ></animate>
+                      </rect>
+                    </g>
+                    <g transform="rotate(30 50 50)">
+                      <rect
+                        x="47"
+                        y="13.5"
+                        rx="3"
+                        ry="8.5"
+                        width="6"
+                        height="17"
+                        fill="#ff56a1"
+                      >
+                        <animate
+                          attributeName="opacity"
+                          values="1;0"
+                          keyTimes="0;1"
+                          dur="1.3513513513513513s"
+                          begin="-1.1261261261261262s"
+                          repeatCount="indefinite"
+                        ></animate>
+                      </rect>
+                    </g>
+                    <g transform="rotate(60 50 50)">
+                      <rect
+                        x="47"
+                        y="13.5"
+                        rx="3"
+                        ry="8.5"
+                        width="6"
+                        height="17"
+                        fill="#ff56a1"
+                      >
+                        <animate
+                          attributeName="opacity"
+                          values="1;0"
+                          keyTimes="0;1"
+                          dur="1.3513513513513513s"
+                          begin="-1.0135135135135136s"
+                          repeatCount="indefinite"
+                        ></animate>
+                      </rect>
+                    </g>
+                    <g transform="rotate(90 50 50)">
+                      <rect
+                        x="47"
+                        y="13.5"
+                        rx="3"
+                        ry="8.5"
+                        width="6"
+                        height="17"
+                        fill="#ff56a1"
+                      >
+                        <animate
+                          attributeName="opacity"
+                          values="1;0"
+                          keyTimes="0;1"
+                          dur="1.3513513513513513s"
+                          begin="-0.900900900900901s"
+                          repeatCount="indefinite"
+                        ></animate>
+                      </rect>
+                    </g>
+                    <g transform="rotate(120 50 50)">
+                      <rect
+                        x="47"
+                        y="13.5"
+                        rx="3"
+                        ry="8.5"
+                        width="6"
+                        height="17"
+                        fill="#ff56a1"
+                      >
+                        <animate
+                          attributeName="opacity"
+                          values="1;0"
+                          keyTimes="0;1"
+                          dur="1.3513513513513513s"
+                          begin="-0.7882882882882883s"
+                          repeatCount="indefinite"
+                        ></animate>
+                      </rect>
+                    </g>
+                    <g transform="rotate(150 50 50)">
+                      <rect
+                        x="47"
+                        y="13.5"
+                        rx="3"
+                        ry="8.5"
+                        width="6"
+                        height="17"
+                        fill="#ff56a1"
+                      >
+                        <animate
+                          attributeName="opacity"
+                          values="1;0"
+                          keyTimes="0;1"
+                          dur="1.3513513513513513s"
+                          begin="-0.6756756756756758s"
+                          repeatCount="indefinite"
+                        ></animate>
+                      </rect>
+                    </g>
+                    <g transform="rotate(180 50 50)">
+                      <rect
+                        x="47"
+                        y="13.5"
+                        rx="3"
+                        ry="8.5"
+                        width="6"
+                        height="17"
+                        fill="#ff56a1"
+                      >
+                        <animate
+                          attributeName="opacity"
+                          values="1;0"
+                          keyTimes="0;1"
+                          dur="1.3513513513513513s"
+                          begin="-0.5630630630630631s"
+                          repeatCount="indefinite"
+                        ></animate>
+                      </rect>
+                    </g>
+                    <g transform="rotate(210 50 50)">
+                      <rect
+                        x="47"
+                        y="13.5"
+                        rx="3"
+                        ry="8.5"
+                        width="6"
+                        height="17"
+                        fill="#ff56a1"
+                      >
+                        <animate
+                          attributeName="opacity"
+                          values="1;0"
+                          keyTimes="0;1"
+                          dur="1.3513513513513513s"
+                          begin="-0.4504504504504505s"
+                          repeatCount="indefinite"
+                        ></animate>
+                      </rect>
+                    </g>
+                    <g transform="rotate(240 50 50)">
+                      <rect
+                        x="47"
+                        y="13.5"
+                        rx="3"
+                        ry="8.5"
+                        width="6"
+                        height="17"
+                        fill="#ff56a1"
+                      >
+                        <animate
+                          attributeName="opacity"
+                          values="1;0"
+                          keyTimes="0;1"
+                          dur="1.3513513513513513s"
+                          begin="-0.3378378378378379s"
+                          repeatCount="indefinite"
+                        ></animate>
+                      </rect>
+                    </g>
+                    <g transform="rotate(270 50 50)">
+                      <rect
+                        x="47"
+                        y="13.5"
+                        rx="3"
+                        ry="8.5"
+                        width="6"
+                        height="17"
+                        fill="#ff56a1"
+                      >
+                        <animate
+                          attributeName="opacity"
+                          values="1;0"
+                          keyTimes="0;1"
+                          dur="1.3513513513513513s"
+                          begin="-0.22522522522522526s"
+                          repeatCount="indefinite"
+                        ></animate>
+                      </rect>
+                    </g>
+                    <g transform="rotate(300 50 50)">
+                      <rect
+                        x="47"
+                        y="13.5"
+                        rx="3"
+                        ry="8.5"
+                        width="6"
+                        height="17"
+                        fill="#ff56a1"
+                      >
+                        <animate
+                          attributeName="opacity"
+                          values="1;0"
+                          keyTimes="0;1"
+                          dur="1.3513513513513513s"
+                          begin="-0.11261261261261263s"
+                          repeatCount="indefinite"
+                        ></animate>
+                      </rect>
+                    </g>
+                    <g transform="rotate(330 50 50)">
+                      <rect
+                        x="47"
+                        y="13.5"
+                        rx="3"
+                        ry="8.5"
+                        width="6"
+                        height="17"
+                        fill="#ff56a1"
+                      >
+                        <animate
+                          attributeName="opacity"
+                          values="1;0"
+                          keyTimes="0;1"
+                          dur="1.3513513513513513s"
+                          begin="0s"
+                          repeatCount="indefinite"
+                        ></animate>
+                      </rect>
+                    </g>
+                  </svg>
+                </div>
+
+                <!-- Display locations -->
+                <ul v-if="!isLoadingTo">
+                  <li
+                    v-for="location in locationCity"
+                    :key="location.id"
+                    @click="selectLocationTo(location)"
+                  >
+                    <div class="d-flex justify-content-between mx-2">
+                      <div>
+                        {{ location?.name }}
+                        <br />
+                        <p
+                          style="
+                            /* opacity: 3; */
+                            opacity: 0.5;
+                            font-size: 10px;
+                          "
+                        >
+                          {{ location?.address?.countryName }}
+                        </p>
+                      </div>
+                      <div style="font-weight: bold">
+                        {{ location.address.cityCode }}
+                      </div>
+                    </div>
+                    <hr />
+                  </li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
         <div>
@@ -561,8 +856,10 @@ export default {
   setup() {
     const amadeusStore = useAmadeus();
     const keywordFrom = ref("");
+    const keywordTo = ref("");
     const locationCity = ref("");
     const isLoading = ref(false);
+    const isLoadingTo = ref(false);
 
     // Watch for changes to the keywordFrom variable
     watch(keywordFrom, async (newKeyword) => {
@@ -570,9 +867,16 @@ export default {
 
       await searchLocations(newKeyword);
     });
+        watch(keywordTo, async (newKeyword) => {
+      await searchLocationsTo(newKeyword);
+    });
+    
     function selectLocation(location) {
-      console.log(keywordFrom);
       keywordFrom.value = location.name; // Set the input field value to the selected location's name
+    }
+    function selectLocationTo(location) {
+      keywordTo.value = location.name; // Set the input field value to the selected location's name
+       isLoadingTo.value = false;
     }
     async function searchLocations(keywordFrom) {
       // Check if the keywordFrom is empty
@@ -596,6 +900,29 @@ export default {
         isLoading.value = false;
       }
     }
+    async function searchLocationsTo(keywordTo) {
+  // Check if the keywordTo is empty
+  if (!keywordTo) {
+    console.log("Keyword is empty");
+    return; // Exit the function if the keywordTo is empty
+  }
+
+  // Encode the keywordTo before making the API request
+  const encodedKeyword = encodeURIComponent(keywordTo);
+  isLoadingTo.value = true; // Set isLoadingTo to true before making the API request
+
+  try {
+    const locations = await amadeusStore.getLocations(encodedKeyword);
+    console.log(locations);
+    locationCity.value = locations; // Assign the value to the ref
+  } catch (error) {
+    console.error("Error fetching locations:", error);
+  } finally {
+    // Set isLoadingTo to false after the API request is completed
+    isLoadingTo.value = false;
+  }
+}
+
 
     // Initial call to searchLocations with empty keywordFrom
     searchLocations("");
@@ -630,10 +957,10 @@ export default {
     return {
       imageUrls,
       items,
-      keywordFrom,
+      keywordFrom,keywordTo,
       locationCity,
-      isLoading,
-      selectLocation,
+      isLoading,isLoadingTo,
+      selectLocation,searchLocationsTo,selectLocationTo
     };
   },
 };
