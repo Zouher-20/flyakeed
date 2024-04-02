@@ -418,13 +418,13 @@
               </svg>
               إلى</span
             ><input
-            v-model="keywordTo"
+              v-model="keywordTo"
               type="text"
               class="color-primary-dark btn bg-gray-soft h-input to p-1 px-3 pt-3 w-100 fs-3"
               placeholder="المدينة أو المطار"
               value=""
             />
-             <div
+            <div
               v-if="keywordTo != ''"
               class="z-index-103 bg-white p-absolute w-100 py-2 c-pointer user-select-none shadow ofy-scroll"
               style="height: 50vh; min-width: 280px; overflow-y: auto"
@@ -726,34 +726,80 @@
             <div
               class="grow-1 card p-relative d-flex g-2 align-items-center color-primary-dark btn btn-white w-50"
             >
+              <div class="text-primary">تاريخ المغادرة</div>
               <div>
-                1
+                <VueDatePicker v-model="dateFrom"></VueDatePicker>
               </div>
             </div>
             <div
               class="grow-1 card p-relative d-flex g-2 align-items-center color-primary-dark btn btn-white w-50"
             >
-              2
+              <div class="text-primary">تاريخ العودة</div>
+              <VueDatePicker v-model="dateTo"></VueDatePicker>
             </div>
           </div>
-           <div class="d-flex">
+          <div class="d-flex">
             <div
               class="grow-1 card p-relative d-flex g-2 align-items-center color-primary-dark btn btn-white w-50"
             >
-              <div>
-                1
+              <p class="text-primary">بالغ</p>
+              <div class="d-flex">
+                <div class="">
+                  <counter-user
+                    @add-one="addAdult()"
+                    @minus-one="minusAdult()"
+                  />
+                </div>
+                <div class="fs-4 mt-4 mx-5">
+                  <p>{{ adult }}</p>
+                </div>
               </div>
             </div>
             <div
               class="grow-1 card p-relative d-flex g-2 align-items-center color-primary-dark btn btn-white w-50"
             >
-              2
+              <p class="text-primary">طفل</p>
+              <div class="d-flex">
+                <div class="">
+                  <counter-user @add-one="addSons()" @minus-one="minusSons()" />
+                </div>
+                <div class="fs-4 mt-4 mx-5">
+                  <p>{{ sons }}</p>
+                </div>
+              </div>
             </div>
             <div
               class="grow-1 card p-relative d-flex g-2 align-items-center color-primary-dark btn btn-white w-50"
             >
-              3
+              <p class="text-primary">رضيع</p>
+              <div class="d-flex">
+                <div class="">
+                  <counter-user @add-one="addBB()" @minus-one="minusBB()" />
+                </div>
+                <div class="fs-4 mt-4 mx-5">
+                  <p>{{ bb }}</p>
+                </div>
+              </div>
             </div>
+          </div>
+          <div class="d-flex mt-1">
+            <div class="btn bg-primary text-white w-50">
+              <span>السياحية</span>
+            </div>
+            <div class="btn text-primary bg-white w-50">
+              <span>الاعمال</span>
+            </div>
+            <div class="btn text-primary bg-white w-50">
+              <span>الأولى</span>
+            </div>
+          </div>
+          <div class="">
+            <button
+            @click="searchFlightOffers"
+              class="btn mt-2 bg-primary fs-3 text-white w-100 mt-1 hover-opacity"
+            >
+              ابحث عن رحلة
+            </button>
           </div>
         </div>
       </div>
@@ -851,8 +897,13 @@ import Knowliom from "../assets/Knowliom.png";
 import NEOM from "../assets/NEOM.png";
 import OM from "../assets/OM.png";
 import { useAmadeus } from "../stores/amadeus";
+import CounterUser from "../components/CounterUser.vue";
+components: {
+  CounterUser;
+}
 
 export default {
+  components: { CounterUser },
   setup() {
     const amadeusStore = useAmadeus();
     const keywordFrom = ref("");
@@ -860,6 +911,11 @@ export default {
     const locationCity = ref("");
     const isLoading = ref(false);
     const isLoadingTo = ref(false);
+    const dateFrom = ref();
+    const dateTo = ref();
+    const adult = ref(0);
+    const sons = ref(0);
+    const bb = ref(0);
 
     // Watch for changes to the keywordFrom variable
     watch(keywordFrom, async (newKeyword) => {
@@ -867,16 +923,45 @@ export default {
 
       await searchLocations(newKeyword);
     });
-        watch(keywordTo, async (newKeyword) => {
+    watch(keywordTo, async (newKeyword) => {
       await searchLocationsTo(newKeyword);
     });
-    
+
     function selectLocation(location) {
       keywordFrom.value = location.name; // Set the input field value to the selected location's name
     }
+    function addAdult() {
+      adult.value = adult.value + 1; // Set the input field value to the selected location's name
+    }
+    function minusAdult() {
+      adult.value = adult.value - 1; // Set the input field value to the selected location's name
+    }
+    function addSons() {
+      sons.value = sons.value + 1; // Set the input field value to the selected location's name
+    }
+    function minusSons() {
+      sons.value = sons.value - 1; // Set the input field value to the selected location's name
+    }
+    function addBB() {
+      bb.value = bb.value + 1; // Set the input field value to the selected location's name
+    }
+    function minusBB() {
+      bb.value = bb.value - 1; // Set the input field value to the selected location's name
+    }
     function selectLocationTo(location) {
       keywordTo.value = location.name; // Set the input field value to the selected location's name
-       isLoadingTo.value = false;
+      isLoadingTo.value = false;
+    }
+    async function searchFlightOffers() {
+      console.log('searchFlightOffers');
+      const params = {
+      originLocationCode: 'NYC',
+        destinationLocationCode: 'LAX',
+        departureDate: '2024-04-01',
+        adults: 1,
+      };
+      const flightOffers = await amadeusStore.getResults(params);
+      console.log(flightOffers);
     }
     async function searchLocations(keywordFrom) {
       // Check if the keywordFrom is empty
@@ -901,28 +986,27 @@ export default {
       }
     }
     async function searchLocationsTo(keywordTo) {
-  // Check if the keywordTo is empty
-  if (!keywordTo) {
-    console.log("Keyword is empty");
-    return; // Exit the function if the keywordTo is empty
-  }
+      // Check if the keywordTo is empty
+      if (!keywordTo) {
+        console.log("Keyword is empty");
+        return; // Exit the function if the keywordTo is empty
+      }
 
-  // Encode the keywordTo before making the API request
-  const encodedKeyword = encodeURIComponent(keywordTo);
-  isLoadingTo.value = true; // Set isLoadingTo to true before making the API request
+      // Encode the keywordTo before making the API request
+      const encodedKeyword = encodeURIComponent(keywordTo);
+      isLoadingTo.value = true; // Set isLoadingTo to true before making the API request
 
-  try {
-    const locations = await amadeusStore.getLocations(encodedKeyword);
-    console.log(locations);
-    locationCity.value = locations; // Assign the value to the ref
-  } catch (error) {
-    console.error("Error fetching locations:", error);
-  } finally {
-    // Set isLoadingTo to false after the API request is completed
-    isLoadingTo.value = false;
-  }
-}
-
+      try {
+        const locations = await amadeusStore.getLocations(encodedKeyword);
+        console.log(locations);
+        locationCity.value = locations; // Assign the value to the ref
+      } catch (error) {
+        console.error("Error fetching locations:", error);
+      } finally {
+        // Set isLoadingTo to false after the API request is completed
+        isLoadingTo.value = false;
+      }
+    }
 
     // Initial call to searchLocations with empty keywordFrom
     searchLocations("");
@@ -957,10 +1041,25 @@ export default {
     return {
       imageUrls,
       items,
-      keywordFrom,keywordTo,
+      keywordFrom,
+      keywordTo,
       locationCity,
-      isLoading,isLoadingTo,
-      selectLocation,searchLocationsTo,selectLocationTo
+      isLoading,
+      isLoadingTo,
+      dateFrom,
+      dateTo,
+      adult,
+      sons,
+      bb,
+      selectLocation,
+      searchLocationsTo,
+      selectLocationTo,
+      minusAdult,
+      addAdult,
+      addSons,
+      minusBB,
+      minusSons,
+      addBB,searchFlightOffers
     };
   },
 };
