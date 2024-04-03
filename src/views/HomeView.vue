@@ -890,6 +890,7 @@
 </template>
 <script>
 import { ref, watch } from "vue";
+import { useRouter } from 'vue-router';
 import AlibabCloud from "../assets/AlibabCloud.png";
 import StcGroup from "../assets/StcGroup.png";
 import JockClub from "../assets/JockClub.png";
@@ -911,11 +912,13 @@ export default {
     const locationCity = ref("");
     const isLoading = ref(false);
     const isLoadingTo = ref(false);
+    const searchLoading = ref(false);
     const dateFrom = ref();
     const dateTo = ref();
     const adult = ref(0);
     const sons = ref(0);
     const bb = ref(0);
+    const router = useRouter();
 
     // Watch for changes to the keywordFrom variable
     watch(keywordFrom, async (newKeyword) => {
@@ -953,12 +956,17 @@ export default {
       isLoadingTo.value = false;
     }
     async function searchFlightOffers() {
+      searchLoading.value=true
+      router.push('/results');
       console.log('searchFlightOffers');
       const params = {
       originLocationCode: 'NYC',
         destinationLocationCode: 'LAX',
         departureDate: '2024-04-01',
         adults: 1,
+        children: 1,
+        infants: 1,
+        travelClass: "ECONOMY",
       };
       const flightOffers = await amadeusStore.getResults(params);
       console.log(flightOffers);
@@ -1044,7 +1052,7 @@ export default {
       keywordFrom,
       keywordTo,
       locationCity,
-      isLoading,
+      isLoading,searchLoading,
       isLoadingTo,
       dateFrom,
       dateTo,
